@@ -5,7 +5,7 @@ from openai import OpenAI
 import re
 
 # Load your validation file
-VALIDATION_PATH = r"D:\GitHub Coding\Capstone\validation_gpt_50.jsonl"
+VALIDATION_PATH = r"ai_pipeline_testing\ed\sentiment-analysis\validation_gpt_50.jsonl"
 
 # Your fine-tuned model name
 MODEL = INSERT
