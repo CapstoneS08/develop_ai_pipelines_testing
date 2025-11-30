@@ -1,5 +1,5 @@
 # setup_ecoplus_structure.py
-
+# for future use
 import os
 from pathlib import Path
 
