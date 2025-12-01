@@ -1,0 +1,46 @@
+{"attribute": "Product", "text_span": "Pipe casting quality is excellent, no defects found during inspection and dimensions are always within tolerance.", "score": 5}
+{"attribute": "Product", "text_span": "Material specs sometimes do not match the drawings and we had to return a few batches last month.", "score": 2}
+{"attribute": "Service", "text_span": "Sales team is very responsive on WhatsApp and email, they follow up quickly on our RFQs and clarifications.", "score": 5}
+{"attribute": "Service", "text_span": "Customer service can be defensive when we raise site issues, we feel our concerns are not fully addressed.", "score": 2}
+{"attribute": "Delivery", "text_span": "Delivery is usually on time but sometimes the second truck comes much later than promised, which affects our night shift.", "score": 4}
+{"attribute": "Delivery", "text_span": "Recent deliveries have been consistently late by two to three days, causing rework in our project schedule.", "score": 2}
+{"attribute": "Payment", "text_span": "Invoices are clear and always match the delivery orders, no issues with billing so far.", "score": 5}
+{"attribute": "Payment", "text_span": "Payment terms are quite rigid and there is little flexibility when our internal approval is delayed.", "score": 2}
+{"attribute": "Product", "text_span": "Stock availability for standard sizes is good, we seldom face out-of-stock issues.", "score": 5}
+{"attribute": "Product", "text_span": "We frequently encounter no stock for common items and have to wait for backorders, which affects site progress.", "score": 2}
+{"attribute": "Service", "text_span": "The team is helpful and willing to coordinate directly with our site supervisors to sort out urgent orders.", "score": 5}
+{"attribute": "Service", "text_span": "We sent a few emails but took a long time to get a reply on technical queries.", "score": 2}
+{"attribute": "Delivery", "text_span": "Deliveries are well coordinated with our crane time and they usually update us if the truck will be late.", "score": 5}
+{"attribute": "Delivery", "text_span": "Sometimes the delivery driver cannot find the correct gate and we waste time guiding them in.", "score": 2}
+{"attribute": "Payment", "text_span": "There was a big mismatch between the PO price and the invoice, took a few weeks to sort out the credit note.", "score": 2}
+{"attribute": "Payment", "text_span": "Finance team is easy to deal with and they accommodate our internal processing timelines.", "score": 5}
+{"attribute": "Product", "text_span": "Casting of manhole covers is robust and passes all our load tests without issues.", "score": 5}
+{"attribute": "Product", "text_span": "We found surface rust on some ductile iron pieces upon arrival, had to reject part of the shipment.", "score": 2}
+{"attribute": "Service", "text_span": "Very easy to get hold of the salesperson even after office hours when we have urgent needs.", "score": 5}
+{"attribute": "Service", "text_span": "Sometimes calls are not returned promptly and we need to chase for updates.", "score": 2}
+{"attribute": "Delivery", "text_span": "Orders usually arrive earlier than planned which helps us build float into our work programme.", "score": 5}
+{"attribute": "Delivery", "text_span": "One batch was completely missed from the delivery and only arrived after we complained.", "score": 2}
+{"attribute": "Payment", "text_span": "Credit terms are reasonable and match what we have with other main suppliers.", "score": 5}
+{"attribute": "Payment", "text_span": "It is difficult to get exceptions or extensions on payment even when the delays are not within our control.", "score": 2}
+{"attribute": "Product", "text_span": "Product quality is okay overall but the surface finishing is not as good as competitors.", "score": 3}
+{"attribute": "Service", "text_span": "The sales engineer knows our project requirements well and proactively suggests alternatives when items are not available.", "score": 5}
+{"attribute": "Service", "text_span": "The service team sometimes pushes responsibility back to us instead of helping to investigate site issues.", "score": 2}
+{"attribute": "Delivery", "text_span": "Delivery lead time for special items is reasonable and they keep us informed on progress.", "score": 4}
+{"attribute": "Delivery", "text_span": "Sometimes the truck arrives without prior notice and our unloading team is not ready.", "score": 2}
+{"attribute": "Payment", "text_span": "We rarely have disputes over invoiced quantities, the billing is usually accurate.", "score": 5}
+{"attribute": "Payment", "text_span": "It took a long time to process a refund when we returned some unused items.", "score": 2}
+{"attribute": "Product", "text_span": "Product dimensions are accurate and we have no issues fitting them on site.", "score": 5}
+{"attribute": "Product", "text_span": "There were a few wrong sizes supplied and we had to send them back for exchange.", "score": 2}
+{"attribute": "Service", "text_span": "The coordinator is friendly and easy to work with, they try to adjust to our site constraints.", "score": 5}
+{"attribute": "Service", "text_span": "It sometimes feels like our smaller orders are not prioritised and we get slower responses.", "score": 2}
+{"attribute": "Delivery", "text_span": "Deliveries for standard items are very fast, usually next day after we confirm the PO.", "score": 5}
+{"attribute": "Delivery", "text_span": "A few times the driver came during restricted hours and we had to reschedule unloading.", "score": 2}
+{"attribute": "Product", "text_span": "Overall we are satisfied with the product quality and the team’s responsiveness.", "score": 5}
+{"attribute": "Service", "text_span": "Overall we are satisfied with the product quality and the team’s responsiveness.", "score": 5}
+{"attribute": "Product", "text_span": "Product quality is fine but deliveries and communication are quite inconsistent.", "score": 4}
+{"attribute": "Delivery", "text_span": "Product quality is fine but deliveries and communication are quite inconsistent.", "score": 3}
+{"attribute": "Service", "text_span": "Product quality is fine but deliveries and communication are quite inconsistent.", "score": 4}
+{"attribute": "Service", "text_span": "Service is excellent but we hope for more flexibility in payment terms as projects get tighter.", "score": 4}
+{"attribute": "Payment", "text_span": "Service is excellent but we hope for more flexibility in payment terms as projects get tighter.", "score": 4}
+{"attribute": "Delivery", "text_span": "Very unhappy with the late deliveries and wrong items supplied in the last few orders.", "score": 2}
+{"attribute": "Product", "text_span": "Very unhappy with the late deliveries and wrong items supplied in the last few orders.", "score": 2}

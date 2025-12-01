@@ -1,6 +1,6 @@
 import os
 import json
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any
 
 import pandas as pd
 from datasets import Dataset
@@ -12,6 +12,7 @@ from transformers import (
     Seq2SeqTrainer,
 )
 import torch
+import re
 
 
 # ---------------------------------------------------------
@@ -29,26 +30,102 @@ def load_jsonl_records(path: str) -> List[Dict[str, Any]]:
 
 
 # ---------------------------------------------------------
-# Build HF Dataset
+# Helper: build (attribute, text, score) examples from a record
+# - Handles BOTH flat and chat-style schemas
+# ---------------------------------------------------------
+def record_to_examples(rec: Dict[str, Any]) -> List[Dict[str, Any]]:
+    examples = []
+
+    # Case 1: flat format with explicit fields
+    if "attribute" in rec and "text_span" in rec and "score" in rec:
+        examples.append(
+            {
+                "attribute": rec["attribute"],
+                "text_span": rec["text_span"],
+                "score": rec["score"],
+            }
+        )
+        return examples
+
+    # Case 2: chat-style { "messages": [...] } format
+    if "messages" in rec:
+        msgs = rec.get("messages", [])
+
+        # user message text
+        user_msg = None
+        for m in msgs:
+            if m.get("role") == "user":
+                user_msg = m.get("content", "")
+                break
+        if not user_msg:
+            return examples
+
+        if "Message:" in user_msg:
+            span_text = user_msg.split("Message:", 1)[1].strip()
+        else:
+            span_text = user_msg.strip()
+
+        # assistant JSON with aspects
+        assistant_msg = None
+        for m in msgs:
+            if m.get("role") == "assistant":
+                assistant_msg = m.get("content", "")
+                break
+        if not assistant_msg:
+            return examples
+
+        try:
+            label_obj = json.loads(assistant_msg)
+        except json.JSONDecodeError:
+            return examples
+
+        aspects = label_obj.get("aspects", {})
+        for aspect_name, score in aspects.items():
+            attr = aspect_name.capitalize()
+            examples.append(
+                {
+                    "attribute": attr,
+                    "text_span": span_text,
+                    "score": int(score),
+                }
+            )
+
+    return examples
+
+
+# ---------------------------------------------------------
+# Build HF Dataset (works for chat-style OR flat JSONL)
 # ---------------------------------------------------------
 def make_seq2seq_dataset(
     jsonl_path: str,
     tokenizer,
-    max_input_length: int = 128,
+    max_input_length: int = 256,
     max_target_length: int = 8,
 ) -> Dataset:
     records = load_jsonl_records(jsonl_path)
 
-    def _to_examples(rec: Dict[str, Any]) -> Dict[str, Any]:
-        attr = rec.get("attribute", "")
-        span = rec.get("text_span", "")
-        score = rec.get("score", None)
-        input_text = f"Attribute: {attr}\nText: {span}"
-        target_text = str(score) if score is not None else ""
+    all_examples: List[Dict[str, Any]] = []
+    for rec in records:
+        all_examples.extend(record_to_examples(rec))
+
+    if not all_examples:
+        raise ValueError(f"No usable examples found in {jsonl_path}")
+
+    def _to_model_example(ex: Dict[str, Any]) -> Dict[str, Any]:
+        attr = ex["attribute"]
+        span = ex["text_span"]
+        score = ex["score"]
+
+        input_text = (
+            f"rate the sentiment score (1-5) for the {attr} aspect "
+            f"of this text:\n{span}"
+        )
+        target_text = str(score)
+
         return {"input_text": input_text, "target_text": target_text}
 
-    examples = [_to_examples(r) for r in records]
-    ds = Dataset.from_list(examples)
+    model_examples = [_to_model_example(e) for e in all_examples]
+    ds = Dataset.from_list(model_examples)
 
     def preprocess(batch):
         model_inputs = tokenizer(
@@ -56,12 +133,11 @@ def make_seq2seq_dataset(
             max_length=max_input_length,
             truncation=True,
         )
-        with tokenizer.as_target_tokenizer():
-            labels = tokenizer(
-                batch["target_text"],
-                max_length=max_target_length,
-                truncation=True,
-            )
+        labels = tokenizer(
+            batch["target_text"],
+            max_length=max_target_length,
+            truncation=True,
+        )
         model_inputs["labels"] = labels["input_ids"]
         return model_inputs
 
@@ -87,23 +163,20 @@ def train_seq2seq_model(
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
 
+    print("📥 Building train dataset from:", train_jsonl)
     train_dataset = make_seq2seq_dataset(train_jsonl, tokenizer)
+    print("📥 Building validation dataset from:", val_jsonl)
     val_dataset = make_seq2seq_dataset(val_jsonl, tokenizer)
 
     data_collator = DataCollatorForSeq2Seq(tokenizer=tokenizer, model=model)
 
+    # Minimal arguments so it's compatible with older transformers
     args = Seq2SeqTrainingArguments(
         output_dir=output_dir,
         num_train_epochs=num_train_epochs,
         per_device_train_batch_size=per_device_batch_size,
         per_device_eval_batch_size=per_device_batch_size,
         learning_rate=learning_rate,
-        evaluation_strategy="epoch",
-        save_strategy="epoch",
-        predict_with_generate=True,
-        logging_dir=os.path.join(output_dir, "logs"),
-        logging_steps=20,
-        report_to=[],
     )
 
     trainer = Seq2SeqTrainer(
@@ -131,7 +204,7 @@ def predict_scores_for_spans(
     attribute_col: str = "attribute",
     text_col: str = "text_span",
     batch_size: int = 16,
-    max_input_length: int = 128,
+    max_input_length: int = 256,
     max_new_tokens: int = 4,
 ) -> pd.DataFrame:
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -142,7 +215,8 @@ def predict_scores_for_spans(
     model.eval()
 
     inputs = [
-        f"Attribute: {row[attribute_col]}\nText: {row[text_col]}"
+        f"rate the sentiment score (1-5) for the {row[attribute_col]} aspect "
+        f"of this text:\n{row[text_col]}"
         for _, row in spans_df.iterrows()
     ]
 
@@ -165,11 +239,8 @@ def predict_scores_for_spans(
 
         for txt in decoded:
             cleaned = txt.strip()
-            score = None
-            for ch in cleaned:
-                if ch in "12345":
-                    score = int(ch)
-                    break
+            m = re.search(r"[1-5]", cleaned)
+            score = int(m.group()) if m else None
             pred_scores.append(score)
 
     result_df = spans_df.copy()
