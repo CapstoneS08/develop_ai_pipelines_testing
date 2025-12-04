@@ -1,0 +1,72 @@
+{
+  "summary_overall": [
+    "Customers demand faster, clearer, and more reliable communication across all interactions.",
+    "Delivery speed and accuracy are critical to avoid project delays and maintain customer trust.",
+    "Product specification clarity and quality assurance are essential to meet application requirements and avoid rework."
+  ],
+  "categories": {
+    "Product": [
+      {
+        "theme": "Specification Clarity",
+        "issue_summary": "Product mismatches and unclear specifications cause project delays and rework.",
+        "action": "Establish earlier, clearer communication channels with clients to confirm product specs before order processing."
+      },
+      {
+        "theme": "Quality and Certification",
+        "issue_summary": "Customers face issues with product quality such as coating defects and missing certifications.",
+        "action": "Implement stricter quality control and ensure timely delivery of all required certificates and test reports."
+      },
+      {
+        "theme": "Product Performance",
+        "issue_summary": "Products need to meet specific technical requirements such as corrosion resistance and dimension consistency.",
+        "action": "Source or develop products that conform to specific application needs and maintain batch-to-batch consistency."
+      },
+      {
+        "theme": "Order Flexibility",
+        "issue_summary": "Customers want the ability to amend orders after placement to accommodate specification changes.",
+        "action": "Introduce a process or system allowing limited amendments to purchase orders post-submission."
+      }
+    ],
+    "Service": [
+      {
+        "theme": "Communication Responsiveness",
+        "issue_summary": "Delays and gaps in responding to customer inquiries reduce satisfaction.",
+        "action": "Set strict response time standards and monitor email and call responsiveness continuously."
+      },
+      {
+        "theme": "Consistent Service Levels",
+        "issue_summary": "Customers expect service quality to remain consistently high across projects and locations.",
+        "action": "Standardize service protocols and monitor service delivery to maintain uniform customer experience."
+      }
+    ],
+    "Delivery": [
+      {
+        "theme": "Speed and Timeliness",
+        "issue_summary": "Delivery speed does not meet critical deadlines causing project risks.",
+        "action": "Prioritize and expedite deliveries for time-sensitive orders and offer premium shipping options."
+      },
+      {
+        "theme": "Delivery Accuracy and Tracking",
+        "issue_summary": "Issues with incomplete deliveries and lack of accurate delivery status updates.",
+        "action": "Implement stronger verification processes at dispatch and provide customers with real-time tracking and clear status updates."
+      },
+      {
+        "theme": "Location and Delivery Guidance",
+        "issue_summary": "Drivers face difficulties locating sites, causing delivery delays.",
+        "action": "Enhance shipment details with clearer location information and provide direct contact numbers for drivers."
+      },
+      {
+        "theme": "Packaging and Condition",
+        "issue_summary": "Packaging shortcomings cause product damage such as rust and coating defects.",
+        "action": "Improve packaging materials and methods to better protect products during transit."
+      }
+    ],
+    "Payment": [
+      {
+        "theme": "Documentation Accuracy",
+        "issue_summary": "Errors in sending calibration certificates and mismatch in documentation create vendor issues.",
+        "action": "Ensure correct and prompt issuance of all payment-related verification documents to appropriate recipients."
+      }
+    ]
+  }
+}
